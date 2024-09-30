@@ -1,0 +1,13 @@
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "endOfLine": "auto",
+  "singleQuote": true,
+  "semi": true,
+  "importOrder": ["react", "next", "next/*", "^@/(.*)$", "^[./]", "^@/(.css)$"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "tailwindConfig": "tailwind.config.ts"
+}
