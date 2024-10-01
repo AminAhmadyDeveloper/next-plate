@@ -3,10 +3,10 @@
 import AOS from 'aos';
 
 import type { FC } from 'react';
-import { useEffect } from 'react';
+
+import { useEmptyEffect } from '@/hooks/use-empty-effect';
 
 export const AosProvider: FC = () => {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(AOS.init, []);
+  useEmptyEffect(AOS.init);
   return null;
 };

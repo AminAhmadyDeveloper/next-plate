@@ -17,7 +17,13 @@ const compat = new FlatCompat({
 });
 
 const raw = [
-  ...compat.extends('next/core-web-vitals', 'plugin:prettier/recommended'),
+  ...compat.extends(
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react-hooks/recommended',
+    'next/core-web-vitals',
+    'plugin:prettier/recommended',
+  ),
   {
     plugins: {
       '@typescript-eslint': typescriptEslint,
@@ -27,6 +33,7 @@ const raw = [
     },
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
+      'react-hooks/exhaustive-deps': 'off',
     },
   },
 ];

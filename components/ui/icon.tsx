@@ -3,7 +3,7 @@ import { type VariantProps, cva } from 'class-variance-authority';
 import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/tailwind-utils';
 
 const iconVariants = cva('', {
   variants: {
@@ -19,6 +19,10 @@ const iconVariants = cva('', {
       '5xl': 'text-5xl',
       '6xl': 'text-6xl',
       '7xl': 'text-7xl',
+    },
+    type: {
+      phosphor: 'phosphor',
+      'font-awesome': 'font-awesome',
     },
     variant: {
       default: 'ph',

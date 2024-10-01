@@ -5,7 +5,7 @@ import type { PropsWithChildren } from 'react';
 
 import type { Metadata, NextPage } from 'next';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/tailwind-utils';
 import { AosProvider } from '@/providers/aos-provider';
 import { StylesProvider } from '@/providers/styles-provider';
 
