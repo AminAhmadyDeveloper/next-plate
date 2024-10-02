@@ -1,7 +1,5 @@
-import { type FetchOptions, ResponseType, ofetch } from 'ofetch';
-
-import { isDevelopment } from '@/lib/env-utils';
-import { noop } from '@/lib/function-utils';
+import type { ResponseType } from 'ofetch';
+import { type FetchOptions, ofetch } from 'ofetch';
 
 export interface ListResponse<G> {
   count?: number;
@@ -11,14 +9,6 @@ export interface ListResponse<G> {
 }
 
 export type ResponseGeneral<T> = T;
-
-// export interface ResponseGeneral<T> {
-//   status: boolean;
-//   path: string;
-//   statusCode: number;
-//   message?: string;
-//   data?: T;
-// }
 
 export interface VerificationCodeData {
   verificationCode?: string;
@@ -36,13 +26,13 @@ export interface HttpError<N extends number = number> {
   [key: string]: unknown;
 }
 
-export interface FetchResult<T, C = false, E = unknown> {
+export interface FetchResult<T, E = unknown> {
   data?: ResponseGeneral<T>;
   error?: HttpError<number> & { data?: E };
   loading?: boolean;
 }
 
-export interface FetchOptionsCustom<R>
+export interface FetchOptionsCustom
   extends FetchOptions<ResponseType, unknown> {
   method?: Method;
   public?: boolean;
@@ -77,23 +67,23 @@ export type Method =
 
 export type Service = 'apm' | 'apu' | 'ps' | 'notification' | 'emoji';
 
-export const createParams = <R>(
-  options: FetchOptionsCustom<R> | undefined,
+export const createParams = (
+  options: FetchOptionsCustom | undefined,
 ): string | undefined => {
   return options?.addToURL ? `/${options.addToURL.join('/')}` : undefined;
 };
 
-export const getBaseURL = (isPublic?: boolean, service?: Service): string => {
+export const getBaseURL = (): string => {
   return 'https://jsonplaceholder.typicode.com/';
 };
 
-export const service = async <T, R = never, C = false, E = unknown>(
+export const service = async <T, E = unknown>(
   path: string,
-  options?: FetchOptionsCustom<R>,
-): Promise<FetchResult<T, C, E>> => {
-  let fetchResult: FetchResult<T, C, E> = { loading: true };
+  options?: FetchOptionsCustom,
+): Promise<FetchResult<T, E>> => {
+  let fetchResult: FetchResult<T, E> = { loading: true };
 
-  const joinedForUrl = createParams<R>(options);
+  const joinedForUrl = createParams(options);
   const token = '';
   const params = options?.params ?? {};
 
@@ -111,11 +101,11 @@ export const service = async <T, R = never, C = false, E = unknown>(
     headers['Expires'] = '0';
   }
 
-  const baseURL = getBaseURL(options?.public, options?.service);
+  const baseURL = getBaseURL();
 
   try {
     const data = (await ofetch<ResponseGeneral<T>>(
-      path + (joinedForUrl || ''),
+      baseURL + path + (joinedForUrl || ''),
       {
         baseURL,
         headers,
@@ -125,22 +115,10 @@ export const service = async <T, R = never, C = false, E = unknown>(
       },
     )) as ResponseGeneral<T>;
 
-    // const responseData = data?.data as VerificationCodeData | undefined;
-
-    // if (data?.message && !options?.hideMessage) {
-    //   if (isDevelopment && responseData?.verificationCode) {
-    //     alert(responseData.verificationCode);
-    //   }
-    //   alert(data?.message);
-    // }
-
     fetchResult = { data, loading: false };
   } catch (error: unknown) {
     const httpError = error as HttpError;
 
-    if (isDevelopment && (httpError.data as any)?.verificationCode) {
-      alert((httpError.data as any).verificationCode);
-    }
     if (httpError?.status === 500) {
       alert('Server Error');
       return { error: httpError };

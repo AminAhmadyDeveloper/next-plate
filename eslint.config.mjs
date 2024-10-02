@@ -34,6 +34,7 @@ const baseConfig = [
     rules: {
       '@typescript-eslint/consistent-type-imports': 'error',
       'react-hooks/exhaustive-deps': 'off',
+      '@typescript-eslint/no-duplicate-enum-values': 'off',
     },
   },
 ];

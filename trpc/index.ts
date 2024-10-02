@@ -1,7 +1,8 @@
-import { publicProcedure, router } from '@/trpc/server';
+import { featuresRoute } from '@/server/api/features/features-route';
+import { router } from '@/trpc/server';
 
 export const appRouter = router({
-  features: publicProcedure.query(() => ({ hello: 'world!' })),
+  features: featuresRoute,
 });
 
 export type AppRouter = typeof appRouter;
