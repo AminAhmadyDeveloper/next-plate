@@ -1,6 +1,7 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import eslint from '@eslint/js';
 import js from '@eslint/js';
+import pluginQuery from '@tanstack/eslint-plugin-query';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import path from 'node:path';
@@ -16,9 +17,8 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
-const raw = [
+const baseConfig = [
   ...compat.extends(
-    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'next/core-web-vitals',
@@ -40,8 +40,9 @@ const raw = [
 
 const config = tslint.config(
   eslint.configs.recommended,
+  ...pluginQuery.configs['flat/recommended'],
   ...tslint.configs.recommended,
-  ...raw,
+  ...baseConfig,
 );
 
 export default config;

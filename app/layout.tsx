@@ -8,6 +8,7 @@ import type { Metadata, NextPage } from 'next';
 import { cn } from '@/lib/tailwind-utils';
 import { AosProvider } from '@/providers/aos-provider';
 import { StylesProvider } from '@/providers/styles-provider';
+import { TanstackQueryProvider } from '@/providers/tanstack-query-provider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,7 +20,7 @@ const RootLayout: NextPage<PropsWithChildren> = ({ children }) => {
     <html lang="en">
       <body className={cn(GeistSans.variable, GeistMono.variable)}>
         <StylesProvider />
-        {children}
+        <TanstackQueryProvider>{children}</TanstackQueryProvider>
         <AosProvider />
       </body>
     </html>
