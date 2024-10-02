@@ -3,17 +3,11 @@ import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch';
 // import { Ratelimit } from '@upstash/ratelimit';
 import Superjson from 'superjson';
 
-import { type NextApiRequest } from 'next';
-
 // import {
 //   createTRPCUpstashLimiter,
 //   defaultFingerPrint,
 //   redis,
 // } from '@/lib/upstash-utils';
-
-type Context = {
-  req: NextApiRequest;
-};
 
 // const rateLimiter = createTRPCUpstashLimiter<typeof t>({
 //   fingerprint: (ctx) => defaultFingerPrint(ctx.req),
@@ -31,13 +25,14 @@ type Context = {
 //   },
 // });
 
-const t = initTRPC.context<Context>().create({ transformer: Superjson });
-
 export const createTRPCContext = (options?: FetchCreateContextFnOptions) => {
   return {
     request: options?.req,
   };
 };
+const t = initTRPC
+  .context<ReturnType<typeof createTRPCContext>>()
+  .create({ transformer: Superjson });
 
 export const router = t.router;
 export const publicProcedure = t.procedure;
