@@ -2,6 +2,7 @@
 
 import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import { RocketIcon } from 'lucide-react';
+import { Fragment } from 'react';
 
 import Link from 'next/link';
 
@@ -17,12 +18,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useSession } from '@/providers/session-provider';
 
-const routes = [
+const routes: { name: string; href?: string; scrollTo?: string }[] = [
   { name: 'Home', href: '/' },
-  { name: 'Features', href: '/#features' },
+  { name: 'Features', scrollTo: 'features' },
   {
     name: 'Documentation',
-    href: 'https://www.touha.dev/posts/simple-nextjs-t3-authentication-with-lucia',
+    href: 'https://github.com/AminAhmadyDeveloper/next-plate',
   },
 ] as const;
 
@@ -45,11 +46,39 @@ export const Header = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               <div className="py-1">
-                {routes.map(({ name, href }) => (
-                  <DropdownMenuItem key={name} asChild>
-                    <Link href={href}>{name}</Link>
-                  </DropdownMenuItem>
-                ))}
+                {routes.map((route) => {
+                  if (route.scrollTo) {
+                    return (
+                      <DropdownMenuItem key={route.name} asChild>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (typeof window !== 'undefined') {
+                              const idTop = document
+                                .querySelector(`#${route.scrollTo}`)
+                                ?.getBoundingClientRect().top;
+
+                              window.scrollTo({
+                                behavior: 'smooth',
+                                top: idTop,
+                              });
+                            }
+                          }}
+                        >
+                          {route.name}
+                        </button>
+                      </DropdownMenuItem>
+                    );
+                  } else if (route.href) {
+                    return (
+                      <DropdownMenuItem key={route.name} asChild>
+                        <Link href={route.href}>{route.name}</Link>
+                      </DropdownMenuItem>
+                    );
+                  } else {
+                    return <Fragment key={route.name} />;
+                  }
+                })}
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -60,15 +89,38 @@ export const Header = () => {
             <RocketIcon className="mr-2 h-5 w-5" /> Acme
           </Link>
           <nav className="ml-10 hidden gap-4 sm:gap-6 md:flex">
-            {routes.map(({ name, href }) => (
-              <Link
-                key={name}
-                className="text-sm font-medium text-muted-foreground/70 transition-colors hover:text-muted-foreground"
-                href={href}
-              >
-                {name}
-              </Link>
-            ))}
+            {routes.map((route) => {
+              if (route.scrollTo) {
+                return (
+                  <button
+                    key={route.name}
+                    className="text-sm font-medium text-muted-foreground/70 transition-colors hover:text-muted-foreground"
+                    type="button"
+                    onClick={() => {
+                      if (typeof window !== 'undefined') {
+                        const idTop = document
+                          .querySelector(`#${route.scrollTo}`)
+                          ?.getBoundingClientRect().top;
+
+                        window.scrollTo({ behavior: 'smooth', top: idTop });
+                      }
+                    }}
+                  >
+                    {route.name}
+                  </button>
+                );
+              } else if (route.href) {
+                return (
+                  <Link
+                    key={route.name}
+                    className="text-sm font-medium text-muted-foreground/70 transition-colors hover:text-muted-foreground"
+                    href={route.href}
+                  >
+                    {route.name}
+                  </Link>
+                );
+              } else return <Fragment key={route.name} />;
+            })}
           </nav>
           <div className="ml-auto flex gap-2">
             {session ? (

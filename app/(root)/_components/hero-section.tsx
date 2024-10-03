@@ -27,15 +27,15 @@ export const HeroSection: FC = () => {
         </p>
         <div className="mb-10">
           <div className="mx-auto max-w-[430px]">
-            <CopyToClipboard text={'git clone '} />
+            <CopyToClipboard text="git clone github.com/AminAhmadyDeveloper/next-plate.git" />
           </div>
         </div>
         <div className="flex justify-center gap-4">
           <Button size="lg" variant="outline" asChild>
-            <a>
+            <Link href="https://github.com/AminAhmadyDeveloper/next-plate">
               <GitHubLogoIcon className="mr-1 h-5 w-5" />
               GitHub
-            </a>
+            </Link>
           </Button>
           <Button size="lg" asChild>
             <Link href="/login">Get Started</Link>
