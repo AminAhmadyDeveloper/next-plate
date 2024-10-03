@@ -15,7 +15,7 @@ const rateLimiter = createTRPCUpstashLimiter<typeof t>({
     `Too many requests, please try again later. ${Math.ceil(
       (hitInfo.reset - Date.now()) / 1000,
     )}`,
-  max: 1,
+  max: 1500,
   windowMs: 10000,
   rateLimitOpts(opts) {
     return {
