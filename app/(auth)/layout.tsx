@@ -20,7 +20,7 @@ const AuthLayout: FC<PropsWithChildren> = async ({ children }) => {
           alt="Image"
           width="1920"
           height="1080"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover dark:invert"
         />
       </div>
     </div>

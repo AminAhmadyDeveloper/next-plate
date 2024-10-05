@@ -16,11 +16,7 @@ export const Logout: FC = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <ExtendedButton
-        isLoading={isPending}
-        size={isPending ? 'icon' : 'sm'}
-        type="submit"
-      >
+      <ExtendedButton isLoading={isPending} size="sm" type="submit">
         Logout
       </ExtendedButton>
     </form>
