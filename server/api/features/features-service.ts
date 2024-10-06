@@ -100,7 +100,7 @@ export const listOfFeatures = publicProcedure.query(() => {
       logo: 'NoniconsJson16',
     },
     {
-      name: 'Magic Regexp',
+      name: 'Magic Regexp (Removed)',
       description: 'A compiled-away, type-safe, readable RegExp alternative',
       logo: 'UnjsMagicRegexp',
     },
