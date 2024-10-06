@@ -24,7 +24,7 @@ export const UploadButton: FC<UploadButtonProps> = (props) => {
           return {
             background: `hsl(var(--primary))`,
             color: `hsl(var(--primary-foreground))`,
-            opacity: props?.disabled ? 0.8 : 1,
+            opacity: props?.disabled ? 0.5 : 1,
           };
         },
       }}
