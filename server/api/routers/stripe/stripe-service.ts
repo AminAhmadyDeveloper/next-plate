@@ -8,6 +8,15 @@ import { stripe } from '@/lib/stripe-instance';
 import type { ManageSubscriptionInput } from '@/server/api/routers/stripe/stripe-input';
 import type { ProtectedTRPCContext } from '@/trpc/server';
 
+const getUrl = () => {
+  const base = (() => {
+    if (typeof window !== 'undefined') return '';
+    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+    return 'http://localhost:3000';
+  })();
+  return base;
+};
+
 export const getStripePlans = async (ctx: ProtectedTRPCContext) => {
   try {
     const user = await ctx.db.query.users.findFirst({
@@ -109,7 +118,7 @@ export const manageSubscription = async (
   if (input.isPro && input.stripeCustomerId) {
     const stripeSession = await ctx.stripe.billingPortal.sessions.create({
       customer: input.stripeCustomerId,
-      return_url: 'http://localhost:3000/',
+      return_url: getUrl(),
     });
 
     return {
@@ -119,8 +128,8 @@ export const manageSubscription = async (
   // If the user is not subscribed to a plan, we create a Stripe Checkout session
   try {
     const stripeSession = await ctx.stripe.checkout.sessions.create({
-      success_url: 'http://localhost:3000/',
-      cancel_url: 'http://localhost:3000/',
+      success_url: getUrl(),
+      cancel_url: getUrl(),
       payment_method_types: ['card'],
       mode: 'subscription',
       billing_address_collection: 'auto',
