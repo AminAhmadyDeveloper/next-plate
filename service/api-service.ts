@@ -74,7 +74,12 @@ export const createParams = (
 };
 
 export const getBaseURL = (): string => {
-  return 'https://jsonplaceholder.typicode.com/';
+  const base = (() => {
+    if (typeof window !== 'undefined') return '';
+    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+    return 'http://localhost:3000';
+  })();
+  return `${base}/api/`;
 };
 
 export const service = async <T, E = unknown>(

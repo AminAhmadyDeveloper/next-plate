@@ -3,6 +3,7 @@ import { type FC, Suspense } from 'react';
 
 import { FeaturesList } from '@/app/(root)/_components/features-list';
 import { HeroSection } from '@/app/(root)/_components/hero-section';
+import { Resend } from '@/app/(root)/_components/resend';
 import { ReviewsList } from '@/app/(root)/_components/reviews-list';
 // import { UploadButton } from '@/app/(root)/_components/upload-button';
 import { UploadDropzone } from '@/app/(root)/_components/upload-dropzone';
@@ -43,6 +44,15 @@ const MainPage: FC = async () => {
           </p>
           <Container className="xl:!max-w-5xl">
             <UploadDropzone disabled={user?.username !== 'aminahmady'} />
+          </Container>
+          <h1 className="mt-8 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
+            Send it via Resend
+          </h1>
+          <p className="text-balance mb-10 text-center text-muted-foreground md:text-lg lg:text-xl">
+            Resend will help you send email so easy!
+          </p>
+          <Container className="xl:!max-w-5xl flex justify-center items-center">
+            <Resend />
           </Container>
           <h1 className="mt-8 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
             <a id="reviews"></a> Reviews
