@@ -80,9 +80,11 @@ const MainPage: FC = async () => {
           <p className="text-balance mb-10 text-center text-muted-foreground md:text-lg lg:text-xl">
             Stripe Subscribe happened
           </p>
-          <Container className="xl:!max-w-5xl flex justify-center items-center">
-            <Billing stripePromises={stripePromises} />
-          </Container>
+          {!!user && (
+            <Container className="xl:!max-w-5xl flex justify-center items-center">
+              <Billing stripePromises={stripePromises} />
+            </Container>
+          )}
           <h1 className="mt-8 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
             <a id="reviews"></a> Reviews
           </h1>
