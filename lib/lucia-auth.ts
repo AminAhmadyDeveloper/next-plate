@@ -32,7 +32,7 @@ export const lucia = new Lucia(adapter, {
   },
 });
 
-export const validateRequest = cache(async (): Promise<SessionUser> => {
+export const uncachedValidateRequest = async (): Promise<SessionUser> => {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
   if (!sessionId) {
     return { user: null, session: null };
@@ -60,7 +60,9 @@ export const validateRequest = cache(async (): Promise<SessionUser> => {
     console.error('Failed to set session cookie');
   }
   return result;
-});
+};
+
+export const validateRequest = cache(uncachedValidateRequest);
 
 declare module 'lucia' {
   interface Register {
