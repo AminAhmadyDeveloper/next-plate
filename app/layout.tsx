@@ -4,6 +4,7 @@ import { Toaster } from 'sonner';
 
 import type { FC, PropsWithChildren } from 'react';
 
+import { ConfirmDialogProvider } from '@/components/extension/confirm-dialog';
 import { validateRequest } from '@/lib/lucia-auth';
 import { cn } from '@/lib/tailwind-utils';
 import { SessionProvider } from '@/providers/session-provider';
@@ -21,7 +22,7 @@ const RootLayout: FC<PropsWithChildren> = async ({ children }) => {
         <TRPCProvider>
           <SessionProvider session={session}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
+              <ConfirmDialogProvider>{children}</ConfirmDialogProvider>
               <Toaster />
             </ThemeProvider>
           </SessionProvider>

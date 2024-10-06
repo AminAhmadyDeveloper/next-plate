@@ -28,7 +28,10 @@ export const Resend: FC = () => {
   const mutate = () => sendEmailMutation.mutate();
 
   const disabled = useMemo(() => {
-    return user?.username !== 'aminahmady' || sendEmailMutation.isPending;
+    return (
+      user?.username !== process.env.NEXT_PUBLIC_ADMIN_USER_NAME ||
+      sendEmailMutation.isPending
+    );
   }, [sendEmailMutation.isPending, user?.username]);
 
   return (
