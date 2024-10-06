@@ -109,7 +109,7 @@ export const manageSubscription = async (
   if (input.isPro && input.stripeCustomerId) {
     const stripeSession = await ctx.stripe.billingPortal.sessions.create({
       customer: input.stripeCustomerId,
-      return_url: '/',
+      return_url: 'http://localhost:3000/',
     });
 
     return {
@@ -117,25 +117,29 @@ export const manageSubscription = async (
     };
   }
   // If the user is not subscribed to a plan, we create a Stripe Checkout session
-  const stripeSession = await ctx.stripe.checkout.sessions.create({
-    success_url: '/',
-    cancel_url: '/',
-    payment_method_types: ['card'],
-    mode: 'subscription',
-    billing_address_collection: 'auto',
-    customer_email: user.email,
-    line_items: [
-      {
-        price: input.stripePriceId,
-        quantity: 1,
+  try {
+    const stripeSession = await ctx.stripe.checkout.sessions.create({
+      success_url: 'http://localhost:3000/',
+      cancel_url: 'http://localhost:3000/',
+      payment_method_types: ['card'],
+      mode: 'subscription',
+      billing_address_collection: 'auto',
+      customer_email: user.email,
+      line_items: [
+        {
+          price: input.stripePriceId,
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        userId: user.id,
       },
-    ],
-    metadata: {
-      userId: user.id,
-    },
-  });
+    });
 
-  return {
-    url: stripeSession.url,
-  };
+    return {
+      url: stripeSession.url,
+    };
+  } catch (error) {
+    console.log(error);
+  }
 };

@@ -13,19 +13,24 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { formatDate } from '@/lib/formatting-utils';
-import type { RouterOutputs } from '@/trpc/shared';
+import { validateRequest } from '@/lib/lucia-auth';
+import { trpc } from '@/trpc/caller';
 
-interface BillingProps {
-  stripePromises: Promise<
-    [RouterOutputs['stripe']['getPlans'], RouterOutputs['stripe']['getPlan']]
-  >;
-}
+export const Billing = async () => {
+  const { session } = await validateRequest();
+  if (!session) return null;
 
-export async function Billing({ stripePromises }: BillingProps) {
-  const [plans, plan] = await stripePromises;
+  const plan = await trpc.stripe.getPlan();
+  const plans = await trpc.stripe.getPlans();
 
   return (
     <div className="flex flex-col w-full gap-y-3">
+      <h1 className="mt-8 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
+        Stripe
+      </h1>
+      <p className="text-balance mb-10 text-center text-muted-foreground md:text-lg lg:text-xl">
+        Stripe Subscribe happened
+      </p>
       <section>
         <Card className="space-y-2 p-8">
           <h3 className="text-lg font-semibold sm:text-xl">
@@ -94,4 +99,4 @@ export async function Billing({ stripePromises }: BillingProps) {
       </section>
     </div>
   );
-}
+};

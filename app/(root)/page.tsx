@@ -1,4 +1,3 @@
-import { Loader2Icon } from 'lucide-react';
 import { type FC, Suspense } from 'react';
 
 import { Billing } from '@/app/(root)/_components/billing';
@@ -8,6 +7,7 @@ import { HeroSection } from '@/app/(root)/_components/hero-section';
 import { Resend } from '@/app/(root)/_components/resend';
 import { ReviewsList } from '@/app/(root)/_components/reviews-list';
 import { UploadDropzone } from '@/app/(root)/_components/upload-dropzone';
+import { Spinner } from '@/components/extension/spinner';
 import { Container } from '@/components/layout/container';
 import NumberTicker from '@/components/ui/number-ticker';
 import { validateRequest } from '@/lib/lucia-auth';
@@ -16,11 +16,7 @@ import { HydrateClient, trpc } from '@/trpc/caller';
 const MainPage: FC = async () => {
   const { user } = await validateRequest();
   await trpc.features.listOfFeatures.prefetch();
-
-  const stripePromises = Promise.all([
-    trpc.stripe.getPlans(),
-    trpc.stripe.getPlan(),
-  ]);
+  await trpc.stripe.getPlans.prefetch();
 
   return (
     <main>
@@ -37,7 +33,7 @@ const MainPage: FC = async () => {
           </p>
           <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
             <HydrateClient>
-              <Suspense fallback={<Loader2Icon className="animate-spin" />}>
+              <Suspense fallback={<Spinner />}>
                 <FeaturesList />
               </Suspense>
             </HydrateClient>
@@ -74,17 +70,11 @@ const MainPage: FC = async () => {
           <Container className="xl:!max-w-5xl flex justify-center items-center">
             <Confirm />
           </Container>
-          <h1 className="mt-8 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
-            Stripe
-          </h1>
-          <p className="text-balance mb-10 text-center text-muted-foreground md:text-lg lg:text-xl">
-            Stripe Subscribe happened
-          </p>
-          {!!user && (
+          <Suspense fallback={<Spinner />}>
             <Container className="xl:!max-w-5xl flex justify-center items-center">
-              <Billing stripePromises={stripePromises} />
+              <Billing />
             </Container>
-          )}
+          </Suspense>
           <h1 className="mt-8 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
             <a id="reviews"></a> Reviews
           </h1>
