@@ -8,12 +8,15 @@ import { db } from '@/server/database/db';
 import { users } from '@/server/database/schema';
 
 export async function POST(req: Request) {
-  console.log('HI');
-
   const body = await req.text();
   const signature = headers().get('Stripe-Signature') ?? '';
 
   let event: Stripe.Event;
+  console.log({
+    body,
+    signature,
+    'process.env.STRIPE_WEBHOOK_SECRET!': process.env.STRIPE_WEBHOOK_SECRET!,
+  });
 
   try {
     event = stripe.webhooks.constructEvent(
