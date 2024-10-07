@@ -30,6 +30,8 @@ export async function POST(req: Request) {
     );
   }
 
+  console.log({ event });
+
   switch (event.type) {
     case 'checkout.session.completed': {
       const checkoutSessionCompleted = event.data.object;
