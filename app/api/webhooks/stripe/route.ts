@@ -31,6 +31,8 @@ export async function POST(req: Request) {
 
       const userId = checkoutSessionCompleted?.metadata?.userId;
 
+      console.log(checkoutSessionCompleted);
+
       if (!userId) {
         return new Response('User id not found in checkout session metadata.', {
           status: 404,

@@ -128,6 +128,24 @@ export const manageSubscription = async (
   }
   // If the user is not subscribed to a plan, we create a Stripe Checkout session
 
+  console.log({
+    success_url: getUrl(),
+    cancel_url: getUrl(),
+    payment_method_types: ['card'],
+    mode: 'subscription',
+    billing_address_collection: 'auto',
+    customer_email: user.email,
+    line_items: [
+      {
+        price: input.stripePriceId,
+        quantity: 1,
+      },
+    ],
+    metadata: {
+      userId: user.id,
+    },
+  });
+
   const stripeSession = await ctx.stripe.checkout.sessions.create({
     success_url: getUrl(),
     cancel_url: getUrl(),
