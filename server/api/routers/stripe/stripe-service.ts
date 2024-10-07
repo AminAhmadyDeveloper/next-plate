@@ -10,9 +10,10 @@ import type { ProtectedTRPCContext } from '@/trpc/server';
 
 const getUrl = () => {
   const base = (() => {
-    if (typeof window !== 'undefined') return '';
+    if (process.env.NODE_ENV === 'development') return 'http://localhost:3000';
+    if (typeof window !== 'undefined') return process.env.APP_URL;
     if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-    return 'http://localhost:3000';
+    return process.env.APP_URL;
   })();
   return base;
 };
@@ -126,29 +127,44 @@ export const manageSubscription = async (
     };
   }
   // If the user is not subscribed to a plan, we create a Stripe Checkout session
-  try {
-    const stripeSession = await ctx.stripe.checkout.sessions.create({
-      success_url: getUrl(),
-      cancel_url: getUrl(),
-      payment_method_types: ['card'],
-      mode: 'subscription',
-      billing_address_collection: 'auto',
-      customer_email: user.email,
-      line_items: [
-        {
-          price: input.stripePriceId,
-          quantity: 1,
-        },
-      ],
-      metadata: {
-        userId: user.id,
-      },
-    });
 
-    return {
-      url: stripeSession.url,
-    };
-  } catch (error) {
-    console.log(error);
-  }
+  console.log({
+    success_url: getUrl(),
+    cancel_url: getUrl(),
+    payment_method_types: ['card'],
+    mode: 'subscription',
+    billing_address_collection: 'auto',
+    customer_email: user.email,
+    line_items: [
+      {
+        price: input.stripePriceId,
+        quantity: 1,
+      },
+    ],
+    metadata: {
+      userId: user.id,
+    },
+  });
+
+  const stripeSession = await ctx.stripe.checkout.sessions.create({
+    success_url: getUrl(),
+    cancel_url: getUrl(),
+    payment_method_types: ['card'],
+    mode: 'subscription',
+    billing_address_collection: 'auto',
+    customer_email: user.email,
+    line_items: [
+      {
+        price: input.stripePriceId,
+        quantity: 1,
+      },
+    ],
+    metadata: {
+      userId: user.id,
+    },
+  });
+
+  return {
+    url: stripeSession.url,
+  };
 };

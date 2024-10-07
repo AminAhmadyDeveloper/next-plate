@@ -8,10 +8,10 @@ import { db } from '@/server/database/db';
 import { users } from '@/server/database/schema';
 
 export async function POST(req: Request) {
+  console.log('HI');
+
   const body = await req.text();
   const signature = headers().get('Stripe-Signature') ?? '';
-
-  console.log(body);
 
   let event: Stripe.Event;
 
