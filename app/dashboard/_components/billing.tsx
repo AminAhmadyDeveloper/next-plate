@@ -2,7 +2,7 @@ import { CheckIcon } from 'lucide-react';
 
 import Link from 'next/link';
 
-import { ManageSubscriptionForm } from '@/app/(root)/_components/manage-subscription-form';
+import { ManageSubscriptionForm } from '@/app/dashboard/_components/manage-subscription-form';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -29,7 +29,7 @@ export const Billing = async () => {
         Stripe
       </h1>
       <p className="text-balance mb-10 text-center text-muted-foreground md:text-lg lg:text-xl">
-        Stripe Subscribe happened
+        Subscribe to website using stripe payments.
       </p>
       <section>
         <Card className="space-y-2 p-8">

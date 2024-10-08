@@ -1,6 +1,5 @@
 import { type FC, Suspense } from 'react';
 
-import { Billing } from '@/app/(root)/_components/billing';
 import { Confirm } from '@/app/(root)/_components/confirm';
 import { FeaturesList } from '@/app/(root)/_components/features-list';
 import { HeroSection } from '@/app/(root)/_components/hero-section';
@@ -70,11 +69,6 @@ const MainPage: FC = async () => {
           <Container className="xl:!max-w-5xl flex justify-center items-center">
             <Confirm />
           </Container>
-          <Suspense fallback={<Spinner />}>
-            <Container className="xl:!max-w-5xl flex justify-center items-center">
-              <Billing />
-            </Container>
-          </Suspense>
           <h1 className="mt-8 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
             <a id="reviews"></a> Reviews
           </h1>

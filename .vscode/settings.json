@@ -20,6 +20,7 @@
   "explorer.compactFolders": false,
 
   "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.tsdk": "node_modules\\typescript\\lib",
 
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
