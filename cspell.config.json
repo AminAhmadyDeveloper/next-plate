@@ -11,6 +11,7 @@
     "bunx",
     "clonedeep",
     "clsx",
+    "commitizen",
     "commitlint",
     "commitlintrc",
     "datetime",
