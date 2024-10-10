@@ -40,14 +40,14 @@ export const BillingSkeleton: FC = () => {
                   <Skeleton className="h-4 w-full" />
                 </CardDescription>
               </CardHeader>
-              <CardContent className="h-full flex-1 gap-y-6">
+              <CardContent className="h-full flex-1 space-y-6">
                 <div className="text-3xl font-bold">
                   <span className="text-sm font-normal text-muted-foreground flex items-center">
                     <Skeleton className="h-5 w-20 mr-2" />
                     /month
                   </span>
                 </div>
-                <div className="gap-y-2">
+                <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <div className="aspect-square shrink-0 rounded-full bg-foreground p-px text-background">
                       <CheckIcon className="size-4" aria-hidden="true" />
