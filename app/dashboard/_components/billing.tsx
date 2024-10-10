@@ -20,8 +20,10 @@ export const Billing = async () => {
   const { session } = await validateRequest();
   if (!session) return null;
 
-  const plan = await trpc.stripe.getPlan();
-  const plans = await trpc.stripe.getPlans();
+  const [plan, plans] = await Promise.all([
+    trpc.stripe.getPlan(),
+    trpc.stripe.getPlans(),
+  ]);
 
   return (
     <div className="flex flex-col w-full gap-y-3">
