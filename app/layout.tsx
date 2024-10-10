@@ -12,6 +12,8 @@ import { StylesProvider } from '@/providers/styles-provider';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { TRPCProvider } from '@/providers/trpc-provider';
 
+export * from '@/lib/seo-utils';
+
 const RootLayout: FC<PropsWithChildren> = async ({ children }) => {
   const session = await validateRequest();
 
