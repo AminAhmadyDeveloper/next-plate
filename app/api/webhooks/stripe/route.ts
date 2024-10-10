@@ -24,6 +24,8 @@ export async function POST(req: Request) {
       process.env.STRIPE_WEBHOOK_SECRET!,
     );
   } catch (err) {
+    console.log(27, { err });
+
     return new Response(
       `Webhook Error: ${err instanceof Error ? err.message : 'Unknown error.'}`,
       { status: 400 },
@@ -41,6 +43,8 @@ export async function POST(req: Request) {
       console.log(checkoutSessionCompleted);
 
       if (!userId) {
+        console.log('User id not found in checkout session metadata.');
+
         return new Response('User id not found in checkout session metadata.', {
           status: 404,
         });
