@@ -2,8 +2,9 @@ import type { FC, PropsWithChildren } from 'react';
 
 import { redirect } from 'next/navigation';
 
+import { Aside } from '@/app/dashboard/_components/aside';
+import { Header } from '@/app/dashboard/_components/header';
 import { Footer } from '@/components/layout/footer';
-import { Header } from '@/components/layout/header';
 import { validateRequest } from '@/lib/lucia-auth';
 
 const DashboardLayout: FC<PropsWithChildren> = async ({ children }) => {
@@ -11,10 +12,13 @@ const DashboardLayout: FC<PropsWithChildren> = async ({ children }) => {
   if (!session) redirect('/login');
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header hideNavigationMenu />
-      {children}
-      <Footer />
+    <div className="grid h-screen w-full pl-[53px]">
+      <Aside />
+      <div className="flex flex-col">
+        <Header />
+        <main>{children}</main>
+        <Footer />
+      </div>
     </div>
   );
 };

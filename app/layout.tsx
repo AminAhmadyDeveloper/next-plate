@@ -5,6 +5,7 @@ import { Toaster } from 'sonner';
 import type { FC, PropsWithChildren } from 'react';
 
 import { ConfirmDialogProvider } from '@/components/extension/confirm-dialog';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { validateRequest } from '@/lib/lucia-auth';
 import { cn } from '@/lib/tailwind-utils';
 import { SessionProvider } from '@/providers/session-provider';
@@ -22,12 +23,18 @@ const RootLayout: FC<PropsWithChildren> = async ({ children }) => {
       <StylesProvider />
       <body className={cn(GeistMono.variable, GeistSans.variable)}>
         <TRPCProvider>
-          <SessionProvider session={session}>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <ConfirmDialogProvider>{children}</ConfirmDialogProvider>
-              <Toaster />
-            </ThemeProvider>
-          </SessionProvider>
+          <TooltipProvider>
+            <SessionProvider session={session}>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <ConfirmDialogProvider>{children}</ConfirmDialogProvider>
+                <Toaster />
+              </ThemeProvider>
+            </SessionProvider>
+          </TooltipProvider>
         </TRPCProvider>
       </body>
     </html>

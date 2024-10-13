@@ -1,11 +1,7 @@
-import { Suspense } from 'react';
-
 import type { NextPage } from 'next';
 
 import { AreaChart } from '@/app/dashboard/_components/area-chart';
 import { BarChart } from '@/app/dashboard/_components/bar-chart';
-import { Billing } from '@/app/dashboard/_components/billing';
-import { BillingSkeleton } from '@/app/dashboard/_components/billing-skeleton';
 import { Container } from '@/components/layout/container';
 
 const DashboardPage: NextPage = () => {
@@ -20,11 +16,6 @@ const DashboardPage: NextPage = () => {
       <Container className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <BarChart />
         <AreaChart />
-      </Container>
-      <Container className="flex justify-center items-center">
-        <Suspense fallback={<BillingSkeleton />}>
-          <Billing />
-        </Suspense>
       </Container>
     </main>
   );
