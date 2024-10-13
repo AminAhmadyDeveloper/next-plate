@@ -15,6 +15,7 @@
     "clsx",
     "codepen",
     "codesandbox",
+    "commitizen",
     "commitlint",
     "commitlintrc",
     "datetime",

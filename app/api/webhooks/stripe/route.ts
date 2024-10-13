@@ -8,13 +8,11 @@ import { db } from '@/server/database/db';
 import { users } from '@/server/database/schema';
 
 export async function POST(req: Request) {
-  console.log(
-    'process.env.STRIPE_WEBHOOK_SECRET!',
-    process.env.STRIPE_WEBHOOK_SECRET!,
-  );
-
   const body = await req.text();
   const signature = headers().get('Stripe-Signature') ?? '';
+
+  console.log('Raw Body:', body);
+  console.log('Stripe-Signature:', signature);
 
   let event: Stripe.Event;
   try {
@@ -29,16 +27,11 @@ export async function POST(req: Request) {
       { status: 400 },
     );
   }
-
-  console.log({ event });
-
   switch (event.type) {
     case 'checkout.session.completed': {
       const checkoutSessionCompleted = event.data.object;
 
       const userId = checkoutSessionCompleted?.metadata?.userId;
-
-      console.log(checkoutSessionCompleted);
 
       if (!userId) {
         return new Response('User id not found in checkout session metadata.', {

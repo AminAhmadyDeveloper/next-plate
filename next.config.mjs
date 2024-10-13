@@ -5,6 +5,12 @@ const withPWA = withPWAInit({
   dest: 'public',
 });
 
-const nextConfig = withPWA({});
+const nextConfig = withPWA({
+  api: {
+    bodyParser: false,
+    externalResolver: true,
+  },
+  regions: ['iad1'],
+});
 
 export default nextConfig;
