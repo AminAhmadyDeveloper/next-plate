@@ -22,6 +22,14 @@
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.tsdk": "node_modules\\typescript\\lib",
 
+  "tailwindCSS.classAttributes": ["class", "className", "parrentClassName"],
+  "tailwindCSS.experimental.classRegex": [
+    ["Variants \\=([^;]*);", "\"([^\"]*)\""],
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["parentClassName\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]", "([^\"'`]+)"]
+  ],
+
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {

@@ -16,6 +16,7 @@ export const UploadDropzone: FC<UploadDropzoneProps> = (props) => (
       container: () => ({
         borderColor: 'hsl(var(--border))',
         borderWidth: '2px',
+        width: '100%',
       }),
       button: () => {
         return {

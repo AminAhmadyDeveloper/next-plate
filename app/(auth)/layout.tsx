@@ -1,8 +1,11 @@
 import type { FC, PropsWithChildren } from 'react';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import { validateRequest } from '@/lib/lucia-auth';
 
 const AuthLayout: FC<PropsWithChildren> = async ({ children }) => {
@@ -14,7 +17,13 @@ const AuthLayout: FC<PropsWithChildren> = async ({ children }) => {
       <div className="flex items-center justify-center py-12 order-2 md:order-1 col-span-full md:col-span-1">
         {children}
       </div>
-      <div className="bg-muted block">
+      <div className="bg-muted block relative">
+        <Button asChild variant="link" className="absolute left-0 top-3 gap-2">
+          <Link href="/">
+            <Icon icon="ph-arrow-left" />
+            Back
+          </Link>
+        </Button>
         <Image
           src="/placeholder.svg"
           alt="Image"
