@@ -4,6 +4,7 @@ import type { FC, FormEventHandler } from 'react';
 import { useTransition } from 'react';
 
 import { logout } from '@/actions/logout';
+import { useConfirm } from '@/components/extension/confirm-dialog';
 import { ExtendedButton } from '@/components/extension/extended-button';
 import { Icon } from '@/components/ui/icon';
 import { Switcher } from '@/components/utils/switcher';
@@ -14,10 +15,21 @@ interface LogoutProps {
 
 export const Logout: FC<LogoutProps> = ({ iconButton }) => {
   const [isPending, startTransition] = useTransition();
+
+  const confirm = useConfirm();
+
   const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    startTransition(logout);
+    const isConfirmed = await confirm({
+      title: 'Logout',
+      description: 'Are you sure you want to logout?',
+      confirmText: 'Logout',
+      cancelText: 'Cancel',
+    });
+    if (isConfirmed) {
+      e.stopPropagation();
+      e.preventDefault();
+      startTransition(logout);
+    }
   };
 
   return (
