@@ -1,6 +1,6 @@
 'use client';
 
-import type { FC, FormEventHandler } from 'react';
+import type { FC, MouseEventHandler } from 'react';
 import { useTransition } from 'react';
 
 import { logout } from '@/actions/logout';
@@ -18,7 +18,7 @@ export const Logout: FC<LogoutProps> = ({ iconButton }) => {
 
   const confirm = useConfirm();
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+  const onSubmit: MouseEventHandler<HTMLButtonElement> = async (e) => {
     const isConfirmed = await confirm({
       title: 'Logout',
       description: 'Are you sure you want to logout?',
@@ -34,28 +34,30 @@ export const Logout: FC<LogoutProps> = ({ iconButton }) => {
 
   return (
     <Switcher selectSecondChild={!!iconButton}>
-      <form onSubmit={onSubmit}>
-        <ExtendedButton isLoading={isPending} size="sm" type="submit">
-          Logout
-        </ExtendedButton>
-      </form>
-      <form onSubmit={onSubmit}>
-        <ExtendedButton
-          isLoading={isPending}
-          type="submit"
-          variant="ghost"
-          size="icon"
-          className="mt-auto rounded-lg"
-          aria-label="Logout"
-        >
-          <Icon
-            icon="ph-sign-out"
-            variant="bold"
-            size="lg"
-            className="text-primary"
-          />
-        </ExtendedButton>
-      </form>
+      <ExtendedButton
+        isLoading={isPending}
+        size="sm"
+        type="button"
+        onClick={onSubmit}
+      >
+        Logout
+      </ExtendedButton>
+      <ExtendedButton
+        isLoading={isPending}
+        type="button"
+        variant="ghost"
+        size="icon"
+        className="mt-auto rounded-lg"
+        aria-label="Logout"
+        onClick={onSubmit}
+      >
+        <Icon
+          icon="ph-sign-out"
+          variant="bold"
+          size="lg"
+          className="text-primary"
+        />
+      </ExtendedButton>
     </Switcher>
   );
 };

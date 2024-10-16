@@ -1,8 +1,11 @@
+'use client';
+
 import { Triangle } from 'lucide-react';
 import type { FC } from 'react';
 
 import Link from 'next/link';
 
+import { useActivePath } from '@/app/dashboard/_hooks/use-active-path';
 import { Logout } from '@/components/layout/logout';
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
@@ -13,6 +16,8 @@ import {
 } from '@/components/ui/tooltip';
 
 export const Aside: FC = () => {
+  const activePath = useActivePath();
+
   return (
     <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
       <div className="border-b p-2">
@@ -26,9 +31,10 @@ export const Aside: FC = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
+              data-active={activePath.path === '/dashboard'}
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className="rounded-lg data-[active=true]:bg-muted"
               aria-label="Dashboard"
               asChild
             >
@@ -44,9 +50,10 @@ export const Aside: FC = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
+              data-active={activePath.path === '/dashboard/become-pro'}
               variant="ghost"
               size="icon"
-              className="rounded-lg"
+              className="rounded-lg data-[active=true]:bg-muted"
               aria-label="Become Pro"
             >
               <Link href="/dashboard/become-pro">
